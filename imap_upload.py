@@ -616,8 +616,10 @@ def get_delivery_time(self, fields):
             # Do not allow the time before 1970-01-01 because
             # some IMAP server (i.e. Gmail) ignore it, and
             # some MUA (Outlook Express?) set From_ date to
-            # 1965-01-01 for all messages.
-            if t < 0:
+            # 1965-01-01 for all messages. Emails downloaded from
+            # lore.kernel.org seem to have "Thu Jan  1 00:00:00 1970"
+            # in the From_ line which should be ignored as well.
+            if t <= 0:
                 continue
             return t
         except:
